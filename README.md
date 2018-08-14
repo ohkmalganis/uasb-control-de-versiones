@@ -6,7 +6,7 @@ Proyecto definido para realizar paso a paso los ejercicios que permiten al maest
 ## Temario
 - [Sesión 1](#sesión-1)
   - [Configuración de GIT](#configuración-de-git)
-  - [Comandos básicos](#comandos-básicos)
+  - [Comandos básicos](#comandos-básicos-1er-parte)
     - [Inicializar un repositorio](#1-inicializar-un-repositorio)
     - [Status](#2-estatus)
     - [Agregar archivos al stage](#3-agregar-archivos-al-escenario-stage)
@@ -24,10 +24,11 @@ Proyecto definido para realizar paso a paso los ejercicios que permiten al maest
     - [Historial entre fechas](#15-historial-entre-fechas)
     - [Historial por autor](#16-historial-por-autor)
 - [Sesión 2](#sesión-2)
-  - [Comandos básicos](#comandos-básicos)
+  - [Comandos básicos](#comandos-básicos-2da-parte)
     - [Quitar archivos del stage](#17-quitar-archivos-del-stage)
     - [Cancelar los cambios](#18-cancelar-los-cambios)
     - [Corregir el último commit](#19-corregir-commits)
+  - [Remotos](#remotos)
 
 
 ## Sesión 1
@@ -47,7 +48,7 @@ Proyecto definido para realizar paso a paso los ejercicios que permiten al maest
 3. Revisar la configuración  
 `git config --list`  
 
-### Comandos básicos
+### Comandos básicos (1er parte)
 
 #### 1. Inicializar un repositorio  
 Un repositorio es una carpeta o conjunto de carpetas que contienen archivos. Podemos crear una carpeta y luego iniciar el repositorio dentro.  
@@ -257,12 +258,17 @@ Es utilizado para ver el historial de cambios de nuestro repositorio.
 
 ## Sesión 2
 
-### Comando básicos
+### Comandos básicos (2da parte)
+
+Para esta sección crearemos un nuevo folder y trabajaremos en el.
+
+`mkdir sesion2`  
 
 #### 17. Quitar archivos del stage
 
-En este momento tenemos cambios en el archivo index.html
+Crearemos un archivo con contenido y lo agregamos al stage
 ```
+echo 'Un testo aleatorio' >> 'sesion2/archivo.txt'
 git status
 git add .
 ```
@@ -272,21 +278,57 @@ La lógica induce a que lo bajemos del escenario y eso es precisamente lo que ha
 
 ```
 git status
-git reset HEAD index.html
+git reset HEAD sesion2/archivo.txt
 git status
 ```
 
 #### 18. Cancelar los cambios
-¿Qué pasaría si ahora nos arrepentimos de esa última modificación en nuestro archivo index.html que aún no commiteamos y la quisiéramos eliminar?
+Modifiquemos algún archivo de nuestra primer sesión  
+`echo 'Un texto aleatorio' >> 'sesion1/index.html'`
+
+¿Qué pasaría si ahora nos arrepentimos de esa última modificación en nuestro archivo que aún no commiteamos y la quisiéramos eliminar?
 
 ```
 git status
 git diff
-git checkout -- index.html
+git checkout -- sesion1/index.html
 git status
 ```
 
 #### 19. Corregir commits
+Hagamos commit de nuestro archivo
+```
+git status
+git add sesion2/archivo.txt
+git commit -m'Primer archivo de la sesion 2'
+```
+
+Modifiquemos nuestro archivo.txt para corregir el error de ortografía que teníamos en `testo`!
+
+Ahora, podemos agregar un nuevo commit con el cambio, o simplemente modificar el último commit.
+
 Frecuentemente cuando trabajamos y consolidamos los cambios olvidamos agregar al escenario algún archivo o simplemente lo modificamos tarde y lo queremos agregar a la información consolidada anteriormente.
 
 `git commit --amend --no-edit`
+
+Existen otras ocasiones en las que por el contrario, lo que queremos modificar es el mensaje del commit.
+
+Hagámoslo para que el mensaje mencione la extensión del archivo.
+
+`git commit --amend -m'Primer archivo txt agregado en la sesión 2'`
+
+Hagamos un cambio aún mas drástico, queremos subir en realidad dos archivos txt.
+
+```
+echo 'Un segundo archivo' >> 'sesion2/archivo2.txt'
+```
+
+Y hagamos el commit pero editando el anterior
+
+```
+git status
+git add .
+git commit --amend -m'Primeros archivos txt agregados en la sesión 2'
+```
+
+### Remotos
